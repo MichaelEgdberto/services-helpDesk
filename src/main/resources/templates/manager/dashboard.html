@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  data-layout-decorate="~{fragments/layout}">
+<head>
+    <title>OPERADOR DASHBOARD</title>
+</head>
+    <body>
+        <div data-layout-fragment="contenido">
+            <h3>Dashboard</h3><a th:href="@{/logout}" class="btn btn-sm btn-danger">salir</a>
+            <div class="row">
+                <div class="col-md-2" th:if="${isAdmin}">
+                    <div  data-th-replace="fragments/menu_fragment :: main-menu">
+
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item" th:each="st : ${lsStatus}">
+                                    <a class="nav-link" th:classappend="${status}==${st.id} ? ' active' : '' " th:href="@{/manager/dashboard(status=${st.id})}" th:text="${st.status}"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <table class="table ">
+                                <tr>
+                                    <th>Departamento</th>
+                                    <th>Creado</th>
+                                    <th>Actualizado</th>
+                                    <th>Usuario</th>
+                                </tr>
+                                <tr th:each="tk : ${tickets}">
+                                    <td th:text="${tk.deptoAtn.departamentoNombre}"></td>
+                                    <td th:text="${tk.fechaCreado}"></td>
+                                    <td th:text="${tk.fechaModificado}"></td>
+                                    <td th:text="${tk.usuario.nombre + ' ' + tk.usuario.apellidos}"></td>
+                                    <td><a th:href="@{/manager/revisa(idt=${tk.id})}">Abrir</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination" th:if="${tickets.totalPages > 1}">
+                                    <li class="page-item" th:if="${not tickets.first}"><a class="page-link" th:href="@{dashboard(status=${status},page=${tickets.number}-1)}">Anterior</a></li>
+                                    <li  th:class="${i==tickets.number} ? 'page-item active' : 'page-item'" th:each="i : ${#numbers.sequence(0,(tickets.totalPages)-1)}">
+                                        <a th:text="${i}" th:href="@{dashboard(status=${status},page=${i})}"   class="page-link">1</a></li>
+                                    <li  class="page-item"><a  class="page-link" th:if="${not tickets.last}" th:href="@{dashboard(status=${status},page=${tickets.number}+1)}">Siguiente</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  data-layout-decorate="~{fragments/layout_template_login}">
+<head>
+
+    <title>template</title>
+
+</head>
+<body>
+    <div data-layout-fragment="contenido">
+        <div class="d-md-flex h-md-100 align-items-center">
+            <div class="col-md-6 p-0 bg-indigo h-md-100">
+                <div class="form-outer text-center d-flex align-items-center ">
+                    <div class="form-inner">
+                        <div class="logo text-uppercase"><span>Acceso</span><strong class="text-warning">Clientes</strong></div>
+                        <p>Acceso a clientes para el registro de incidentes o problemas con los sistemas</p>
+                        <form th:action="@{/}" method="POST" class="text-left form-validate">
+                            <div class="form-group-material">
+                                <input id="correo" type="text" name="email" required data-msg="Coloque su correo" class="input-material">
+                                <label for="correo" class="label-material">Correo</label>
+                            </div>
+                            <div class="form-group text-center"><button class="btn btn-info btn-round">Ingresar</button>
+                                <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0 bg-dark h-md-100 loginarea">
+<!--                <div class="form-outer text-center d-flex align-items-center">-->
+<!--                    <div class="form-inner" >-->
+<!--                        <div class="logo text-uppercase"><span>Acceso</span><strong class="text-cyan">Operadores</strong></div>-->
+<!--                        <p>Acceso administrativo al sistema de helpdesk lifesavers, Si no es administrador u operador, ingrese en el menu de la izquierda</p>-->
+<!--                        <form th:action="@{/login}" method="POST" class="text-left form-validate">-->
+<!--                            <div class="form-group-material">-->
+<!--                                <input id="login-username" type="text" name="usuario" required data-msg="Coloque su usuario" class="input-material">-->
+<!--                                <label for="login-username" class="label-material">Usuario</label>-->
+<!--                            </div>-->
+<!--                            <div class="form-group-material">-->
+<!--                                <input id="login-password" type="password" name="password" required data-msg="Ingrese su password" class="input-material">-->
+<!--                                <label for="login-password" class="label-material">Contraseña</label>-->
+<!--                            </div>-->
+<!--                            <div class="form-group text-center"><button class="btn btn-dark btn-round">Login</button>-->
+<!--                                &lt;!&ndash; This should be submit button but I replaced it with <a> for demo purposes&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

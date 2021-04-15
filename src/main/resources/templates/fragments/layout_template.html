@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title data-layout-title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">SERVICES :: HELPDESK</title>
+
+
+
+    <!-- Bootstrap -->
+    <link th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- NProgress -->
+    <link th:href="@{/webjars/nprogress/0.2.0/nprogress.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,800" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400" rel="stylesheet" type="text/css" />
+
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" th:href="@{/css/fontastic.css}">
+    <!-- jQuery Circle-->
+    <link rel="stylesheet" th:href="@{/css/grasp_mobile_progress_circle-1.0.0.min.css}">
+    <!-- Custom Scrollbar-->
+    <link rel="stylesheet" th:href="@{/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css}">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+
+    <!-- jQuery -->
+    <script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+    <!-- Bootstrap -->
+    <script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+    <script th:src="@{/vendor/popper.js/umd/popper.min.js}"> </script>
+    <script th:src="@{/js/grasp_mobile_progress_circle-1.0.0.min.js}"></script>
+    <script th:src="@{/vendor/jquery.cookie/jquery.cookie.js}"> </script>
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/vendor/jquery-validation/jquery.validate.min.js}"></script>
+    <script th:src="@{/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+    <!-- Main File-->
+    <script th:src="@{/js/front.js}"></script>
+
+</head>
+<body>
+    <div  data-th-replace="fragments/template-sidebar-menu :: template_main_menu"></div>
+    <div class="page" data-layout-fragment="contenido">
+
+    </div>
+
+</body>
+</html>

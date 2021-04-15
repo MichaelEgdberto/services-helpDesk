@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  data-layout-decorate="~{fragments/layout_template}">
+<head>
+
+    <title>template</title>
+
+</head>
+<body>
+    <div data-layout-fragment="contenido">
+        <div  data-th-replace="fragments/template-nav-header :: header-nav"></div>
+        <section class="forms">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <h4>Forma Solicitudes</h4>
+                            </div>
+                            <div class="card-body">
+                                <h5>Llene su solicitud de soporte.</h5>
+                                <form method="post" th:action="@{guardaSolicitud}" th:object="${tickets}">
+                                    <div class="form-group row">
+                                    <p>Forma de Contacto Preferente</p>
+                                    <div class="col-sm-10">
+                                        <div class="i-checks" th:each="cnt : ${lsContacto}" >
+                                            <input type="checkbox" th:id="${'checkboxCustom' + cnt.id}" th:field="*{contacto}"  th:value="${cnt.id}"  class="" >
+                                            <label th:for="${'checkboxCustom'+cnt.id}" class="" th:text="${cnt.contacto}">Contacto:</label>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="departamento" class="label">Departamento</label>
+                                        <select id="departamento" th:field="*{deptoAtn}"  class="form-control" style="width: 100%"
+                                                required>
+                                            <option value=""> Seleccione un departamento</option>
+                                            <option th:each="dpt : ${deptosAtn}" th:value="${dpt.id}"
+                                                    th:text="${dpt.departamentoNombre}"></option>
+                                        </select>
+                                    </div>
+                                    <span class="bg-warning" th:if="${#fields.hasErrors('deptoAtn')}" th:errors="*{deptoAtn}"></span>
+                                    <div class="form-group">
+                                        <label for="descripcion" class="label">Descripción amplia y detallada del problema</label>
+                                        <textarea class="form-control" th:field="*{descripcionProblema}" id="descripcion"  rows="10" required></textarea>
+                                    </div>
+                                    <span class="bg-warning" th:if="${#fields.hasErrors('descripcionProblema')}" th:errors="*{descripcionProblema}"></span>
+                                    <div class="form-group">
+                                        <input type="hidden" th:field="*{usuario}" >
+                                        <button class="btn btn-dark btn-sm">Enviar Solicitud</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <!-- Recent Updates Widget          -->
+                        <div id="new-updates" class="card updates recent-updated">
+                            <div id="updates-header" class="card-header d-flex justify-content-between align-items-center">
+                                <h2 class="h5 display"><a data-toggle="collapse" data-parent="#new-updates" href="#updates-box" aria-expanded="false" aria-controls="updates-box">Nuevos Recientes</a></h2><a data-toggle="collapse" data-parent="#new-updates" href="#updates-box" aria-expanded="false" aria-controls="updates-box"><i class="fa fa-angle-down"></i></a>
+
+                            </div>
+                            <div id="updates-box" role="tabpanel" class="collapse "  th:classappend="${page}=='pageA' ? ' show' : ' hide' ">
+                                <ul class="news list-unstyled">
+                                    <!-- Item-->
+                                    <li class="d-flex justify-content-between" th:each="tkn : ${lsSolicitudesA}">
+                                        <div class="left-col d-flex">
+                                            <div class="icon"><i class="icon-rss-feed"></i></div>
+                                            <div class="title"><strong th:text="${tkn.deptoAtn.departamentoNombre}">Lorem ipsum dolor sit amet.</strong>
+                                                <p th:text="${tkn.descripcionProblema}">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="right-col text-right">
+                                            <div class="update-date" th:inline="text">[[${#dates.format(tkn.fechaModificado,'dd')}]]<span  class="month" th:text="${#strings.capitalize(#dates.format(tkn.fechaModificado,'MMM'))}"></span></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer"  th:if="${lsSolicitudesA.totalPages > 1}">
+                                <nav>
+                                    <ul class="pagination pagination-sm">
+                                        <li class="page-item" th:if="${not lsSolicitudesA.first}"><a class="page-link" th:href="@{/perfil(show=a,pageA=${lsSolicitudesA.number}-1)}">&cuepr;</a></li>
+                                        <li  th:class="${i==lsSolicitudesA.number} ? 'page-item active' : 'page-item'" th:each="i : ${#numbers.sequence(0,(lsSolicitudesA.totalPages)-1)}">
+                                            <a th:text="${i}" th:href="@{/perfil(show=a,pageA=${i})}"  class="page-link">1</a></li>
+                                        <li  class="page-item"><a  class="page-link" th:if="${not lsSolicitudesA.last}" th:href="@{/perfil(show=a,pageA=${lsSolicitudesA.number}+1)}">&cuesc;</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div id="in-process" class="card updates recent-updated">
+                            <div id="in-process-header" class="card-header d-flex justify-content-between align-items-center">
+                                <h2 class="h5 display"><a data-toggle="collapse" data-parent="#in-process-updates" href="#in-process-box" aria-expanded="false" aria-controls="in-process-box">En Proceso</a></h2>
+                                <a data-toggle="collapse" data-parent="#in-process" href="#in-process-box" aria-expanded="false" aria-controls="in-process-box"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                            <div id="in-process-box" role="tabpanel" class="collapse " th:classappend="${page}=='pageB' ? ' show' : ' hide' ">
+                                <ul class="news list-unstyled">
+                                    <!-- Item-->
+                                    <li class="d-flex justify-content-between" th:each="tknb : ${lsSolicitudesB}">
+                                        <div class="left-col d-flex">
+                                            <div class="icon"><i class="icon-rss-feed"></i></div>
+                                            <div class="title"><strong th:text="${tknb.deptoAtn.departamentoNombre}">Lorem ipsum dolor sit amet.</strong>
+                                                <p th:text="${tknb.descripcionProblema}">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                                <a th:href="@{/client/revisa(idt=${tknb.id})}" class="btn btn-round btn-sm btn-info"><i class="fa fa-eye"></i>Revisar</a>
+                                            </div>
+                                        </div>
+                                        <div class="right-col text-right">
+                                            <div class="update-date" th:inline="text">[[${#dates.format(tknb.fechaModificado,'dd')}]]<span  class="month" th:text="${#strings.capitalize(#dates.format(tknb.fechaModificado,'MMM'))}"></span></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer" th:if="${lsSolicitudesB.totalPages > 1}">
+                                <nav>
+                                    <ul class="pagination pagination-sm justify-content-center d-flex align-items-center" >
+                                        <li class="page-item" th:if="${not lsSolicitudesB.first}"><a class="page-link" th:href="@{/perfil(show=b,pageB=${lsSolicitudesB.number}-1)}">&cuepr;</a></li>
+                                        <li  th:class="${i==lsSolicitudesB.number} ? 'page-item active' : 'page-item'" th:each="i : ${#numbers.sequence(0,(lsSolicitudesB.totalPages)-1)}">
+                                            <a th:text="${i}" th:href="@{/perfil(show=b,pageB=${i})}"  class="page-link">1</a></li>
+                                        <li  class="page-item"><a  class="page-link" th:if="${not lsSolicitudesB.last}" th:href="@{/perfil(show=b,pageB=${lsSolicitudesB.number}+1)}">&cuesc;</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Recent Updates Widget End-->
+                        <div id="ended" class="card updates recent-updated">
+                            <div id="ended-header" class="card-header d-flex justify-content-between align-items-center">
+                                <h2 class="h5 display"><a data-toggle="collapse" data-parent="#ended" href="#ended-box" aria-expanded="false" aria-controls="ended-box">Finalizados</a></h2><a data-toggle="collapse" data-parent="#ended" href="#ended-box" aria-expanded="false" aria-controls="ended-box"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                            <div id="ended-box" role="tabpanel" class="collapse " th:classappend="${page}=='pageC' ? ' show' : ' hide' ">
+                                <ul class="news list-unstyled">
+                                    <!-- Item-->
+                                    <li class="d-flex justify-content-between" th:each="tknc : ${lsSolicitudesC}">
+                                        <div class="left-col d-flex">
+                                            <div class="icon"><i class="icon-rss-feed"></i></div>
+                                            <div class="title"><strong th:text="${tknc.deptoAtn.departamentoNombre}">Lorem ipsum dolor sit amet.</strong>
+                                                <p th:text="${tknc.descripcionProblema}">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                            </div>
+                                        </div>
+                                        <div class="right-col text-right">
+                                            <div class="update-date" th:inline="text">[[${#dates.format(tknc.fechaModificado,'dd')}]]<span  class="month" th:text="${#strings.capitalize(#dates.format(tknc.fechaModificado,'MMM'))}"></span></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer" th:if="${lsSolicitudesC.totalPages > 1}">
+                                <nav>
+                                    <ul class="pagination pagination-sm" >
+                                        <li class="page-item" th:if="${not lsSolicitudesC.first}"><a class="page-link" th:href="@{/perfil(show=c,pageC=${lsSolicitudesC.number}-1)}">&cuepr;</a></li>
+                                        <li  th:class="${i==lsSolicitudesC.number} ? 'page-item active' : 'page-item'" th:each="i : ${#numbers.sequence(0,(lsSolicitudesC.totalPages)-1)}">
+                                            <a th:text="${i}" th:href="@{/perfil(show=c,pageC=${i})}"  class="page-link">1</a></li>
+                                        <li  class="page-item"><a  class="page-link" th:if="${not lsSolicitudesC.last}" th:href="@{/perfil(show=c,pageC=${lsSolicitudesC.number}+1)}">&cuesc;</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div  data-th-replace="fragments/template-footer :: footer-template"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<nav class="side-navbar" data-th-fragment="template_main_menu">
+    <div class="side-navbar-wrapper">
+        <!-- Sidebar Header    -->
+        <div class="sidenav-header d-flex align-items-center justify-content-center">
+            <!-- User Info-->
+            <div class="sidenav-header-inner text-center" th:if="${usuario}">
+                <img th:src="@{${'https://ui-avatars.com/api/?font-size=0.43&bold=true&rounded=true&background=0D8ABC&color=fff&name=' + usuario.nombre + '+' + usuario.apellidos}}"
+                     src="img/avatar-7.jpg" alt="person" class="img-fluid">
+                <h2 class="h5" th:text="${usuario.nombre + ' ' + usuario.apellidos}">Nathan Andrews</h2><span th:text="${usuario.organizacion}">Web Developer</span>
+            </div>
+            <div class="sidenav-header-inner text-center" th:if="${op}">
+                <img th:src="@{${'https://ui-avatars.com/api/?font-size=0.43&bold=true&rounded=true&background=0D8ABC&color=fff&name=' + op.nombre + '+' + op.apellidos}}"
+                     src="img/avatar-7.jpg" alt="person" class="img-fluid">
+                <h2 class="h5" th:text="${op.nombre + ' ' + op.apellidos}">Nathan Andrews</h2>
+            </div>
+            <!-- Small Brand information, appears on minimized sidebar-->
+            <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>L</strong><strong class="text-primary">F</strong></a></div>
+        </div>
+        <!-- Sidebar Navigation Menus-->
+        <div class="main-menu"  th:if="${isAdmin}">
+            <h5 class="sidenav-heading">Menu Principal</h5>
+            <ul id="side-main-menu" class="side-menu list-unstyled">
+                <li><a th:href="@{/manager/dashboard}" > <i class="icon-home"></i>Dashboard</a></li>
+                <li><a th:href="@{/admin/operadores}" ><i class="far fa-address-card"></i>Operadores                             </a></li>
+                <li><a th:href="@{/admin/clientes}" > <i class="fas fa-address-card"></i>Clientes                             </a></li>
+                <li><a th:href="@{/admin/deptos}" > <i class="fas fa-building"></i>Departamentos                             </a></li>
+                <li><a th:href="@{/admin/catStatus}" > <i class="icon-grid"></i>Cat Status                             </a></li>
+                <li><a th:href="@{/logout}" > <i class="fas fa-sign-out-alt"></i>Logout                             </a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

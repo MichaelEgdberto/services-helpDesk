@@ -1,0 +1,18 @@
+<div data-th-fragment="main-menu" >
+    <h4>Menu</h4>
+<!--    <div class="card-header">-->
+<!--        <h4>Menu</h4>-->
+<!--    </div>-->
+<!--    <div class="card-body">-->
+<!--        <div class="list-group">-->
+            <a th:href="@{/manager/dashboard}" class="list-group-item list-group-item-action " th:classappend="${pDashboard} ? ' active' : '' ">
+                Dashboard
+            </a>
+            <a th:href="@{/admin/operadores}" class="list-group-item list-group-item-action" th:classappend="${pOperadores} ? ' active' : '' ">Operadores</a>
+            <a th:href="@{/admin/operadores}" class="list-group-item list-group-item-action"  th:classappend="${pOpDeptos} ? ' active' : '' ">Op-Depto</a>
+            <a th:href="@{/admin/deptos}" class="list-group-item list-group-item-action" th:classappend="${pDeptos} ? ' active' : '' ">Departamentos</a>
+            <a th:href="@{/admin/catStatus}" class="list-group-item list-group-item-action" th:classappend="${pStatus} ? ' active' : '' ">Estados</a>
+            <a th:href="@{/logout}" class="list-group-item list-group-item-action list-group-item-danger">salir</a>
+<!--        </div>-->
+<!--    </div>-->
+</div>

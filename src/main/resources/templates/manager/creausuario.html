@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  data-layout-decorate="~{fragments/layout}">
+<head>
+
+    <title>REGISTRO</title>
+
+</head>
+<body>
+    <div data-layout-fragment="contenido">
+        <div class="row">
+            <div class="col-md-2">
+                <div  data-th-replace="fragments/menu_fragment :: main-menu">
+
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class="card-body">
+                        <form th:object="${operadores}"  method="post">
+                            <div class="row">
+                                <label for="usuario" class="col-md-3">Usuario:</label>
+                                <input type="text" id="usuario" th:field="*{usuario}"  class="col-md-8 form-control form-control-sm" required autocomplete="false">
+                                <span class="bg-warning" th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}"></span>
+                            </div>
+                            <div class="row">
+                                <label for="password" class="col-md-3">Contraseña:</label>
+                                <input type="text" id="password" th:field="*{password}"  class="col-md-8 form-control form-control-sm" required  autocomplete="false">
+                            </div>
+                            <div class="row">
+                                <label for="nombre" class="col-md-3">Nombre:</label>
+                                <input type="text" id="nombre" th:field="*{nombre}" class="col-md-8 form-control form-control-sm" required>
+                            </div>
+                            <div class="row">
+                                <label for="apellidos" class="col-md-3">Apellidos:</label>
+                                    <input type="text" id="apellidos" th:field="*{apellidos}"  class="col-md-8 form-control form-control-sm" required>
+                            </div>
+                            <div class="row">
+                                <label for="correo" class="col-md-3">Correo:</label>
+                                <input type="text" id="correo" th:field="*{correo}"  class="col-md-8 form-control form-control-sm" required  autocomplete="false">
+                                <span class="bg-warning" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></span>
+                            </div>
+                            <div class="row" >
+                                <label for="activo" class="col-md-4">Activo</label>
+                                <input type="checkbox" id="activo" th:field="*{activo}"  class="col-md-1 form-control form-control-sm" >
+                                <input type="hidden" th:field="*{id}">
+                            </div>
+                            <hr>
+                            <h6>Roles</h6>
+                            <div class="row" th:each="rol : ${lsRoles}">
+                                <label th:for="${rol.id}" class="col-md-3" th:text="${rol.role}">ROL ADMIN:</label>
+                                <input type="radio" th:id="${rol.id}" th:field="*{role}"  th:value="${rol.id}"  class="col-md-1 form-control form-control-sm" required>
+                            </div>
+                            <hr>
+                            <h6>Departamentos</h6>
+                            <div class="row" th:each="dep : ${lsDeptos}">
+                                <label th:for="${dep.id}" class="col-md-8" th:text="${dep.departamentoNombre}">Depto:</label>
+                                <input type="checkbox" th:id="${dep.id}" th:field="*{deptos}"  th:value="${dep.id}"  class="col-md-1 form-control form-control-sm" >
+                            </div>
+                            <hr>
+<!--                            <div class="row">-->
+<!--                                <label for="rolManager" class="col-md-3">ROL MANAGER:</label>-->
+<!--                                <input type="radio" id="rolManager" th:field="*{roles}"  value="MANAGER" class="col-md-5 form-control form-control-sm">-->
+<!--                            </div>-->
+
+                            <button class="btn btn-dark">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Listado</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <ul class="list-group" th:each="st : ${lsOperadores}">
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><span th:text="${st.nombre + ' ' + st.apellidos}"></span>
+                                <a th:href="@{operadores(idd=${st.id})}" class="btn btn-sm" th:classappend="${st.activo} ? ' btn-info' : ' '"><i class="fas fa-edit"></i></a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

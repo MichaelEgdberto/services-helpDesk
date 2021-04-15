@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  data-layout-decorate="~{fragments/layout_template}">
+<head>
+
+    <title>template</title>
+
+</head>
+<body>
+    <div data-layout-fragment="contenido">
+        <div  data-th-replace="fragments/template-nav-header :: header-nav"></div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Revisa Ticket</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <h5 class="col-md-6 card-title">Area de Soporte: <span th:text="${tk.deptoAtn.departamentoNombre}"></span></h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Solicita: <strong><span th:text="${tk.usuario.nombre + ' ' + tk.usuario.apellidos}"></span></strong></div>
+                                <div class="col-md-4">Correo: <strong><span th:text="${tk.usuario.correo}"></span></strong></div>
+                                <div class="col-md-4">Telefono: <strong><span th:text="${tk.usuario.telefono}"></span></strong></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">Organizacion: <span th:text="${tk.usuario.organizacion}"></span></div></strong>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">Descripcion del problema:
+                                    <strong><span class="card-text" th:text="${tk.descripcionProblema}"></span></strong>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <label for="accion" class="col-md-2">Accion</label>
+                                <select id="accion" class="col-md-5 form-control form-control-sm" name="status">
+                                    <option th:each="st : ${lsStatus}" th:value="${st.id}" th:text="${st.status}"></option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2" for="observaciones">Observaciones</label>
+                                <textarea id="observaciones" class="form-control form-control-sm" name="observacion" required></textarea>
+                            </div>
+                            <input type="hidden" name="idt" th:value="${tk.id}">
+
+                            <a th:href="@{${cancelUrl}}" class="btn btn-sm btn-light">Cancelar</a> <button class="btn btn-sm btn-dark">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div >
+            <div class="row" >
+                <div class="col-md-6" >
+                    <div class="card" th:each="mv : ${lsMov}">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${mv.fechaCreado}"></h5>
+                            <blockquote class="blockquote mb-0">
+                                <p class="card-text">Observacion : <span th:text="${mv.observacion}"></span></p>
+                                <footer class="blockquote-footer" th:if="${mv.operador}!=null">Operador: <cite th:title="${mv.operador.usuario}" th:text="${mv.operador.usuario}" >Source Title</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination" th:if="${lsMov.totalPages > 1}">
+                            <li class="page-item" th:if="${not lsMov.first}"><a class="page-link" th:href="@{revisa(idt=${tk.id},page=${lsMov.number}-1)}">Anterior</a></li>
+                            <li  th:class="${i==lsMov.number} ? 'page-item active' : 'page-item'" th:each="i : ${#numbers.sequence(0,(lsMov.totalPages)-1)}">
+                                <a th:text="${i}" th:href="@{revisa(idt=${tk.id},page=${i})}"   class="page-link">1</a></li>
+                            <li  class="page-item"><a  class="page-link" th:if="${not lsMov.last}" th:href="@{revisa(idt=${tk.id},page=${lsMov.number}+1)}">Siguiente</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div  data-th-replace="fragments/template-footer :: footer-template"></div>
+    </div>
+</body>
+</html>

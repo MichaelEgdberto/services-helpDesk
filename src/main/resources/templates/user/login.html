@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  data-layout-decorate="~{fragments/layout}">
+<head>
+
+    <title>REGISTRO</title>
+
+</head>
+<body>
+    <div data-layout-fragment="contenido">
+        <div class="row">
+            <div class="col-md-5">
+                <form th:action="@{/login}" method="POST" class="form-signin">
+                    <h3 class="form-signin-heading" th:text="'Acceso Administrativo'"></h3>
+                    <br/>
+
+                    <input type="text" id="usuario" name="usuario"  th:placeholder="usuario"
+                           class="form-control" /> <br/>
+                    <input type="password"  th:placeholder="Password"
+                           id="password" name="password" class="form-control" /> <br />
+
+                    <div align="center" th:if="${param.error}">
+                        <p style="color: #FF1C19;">Usuario o Password incorrectos</p>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

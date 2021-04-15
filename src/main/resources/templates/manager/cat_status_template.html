@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  data-layout-decorate="~{fragments/layout_template}">
+<head>
+
+    <title>template</title>
+
+</head>
+<body>
+    <div data-layout-fragment="contenido">
+        <div  data-th-replace="fragments/template-nav-header :: header-nav"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Catalogo Estados</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" th:object="${catStatus}">
+                            <div class="form-group row">
+                                <label for="estadoNombre" class="col-md-4">Estado Nombre</label>
+                                <input type="text" class="col-md-8 form-control form-control-sm" id="estadoNombre" th:field="*{status}" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="codigo" class="col-md-4">Codigo</label>
+                                <input type="text" class="col-md-4 form-control form-control-sm" size="4" id="codigo" th:field="*{codigo}" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="indice" class="col-md-4" >Indice</label>
+                                <input type="number" class="col-md-2 form-control form-control-sm" pattern="[1-9](1)" id="indice" th:field="*{indice}" required>
+
+                            </div>
+                            <div class="form-group row" >
+                                <label for="publico" class="col-md-4">Publico</label>
+                                <input type="checkbox" id="publico" th:field="*{publico}" >
+                            </div>
+                            <div class="form-group row" >
+                                <label for="activo" class="col-md-4">Activo</label>
+                                <input type="checkbox" id="activo" th:field="*{activo}" >
+                                <input type="hidden" th:field="*{id}">
+                            </div>
+                            <div class="form-group ">
+                                <button class="btn btn-dark btn-sm" th:disabled="${disableButton}">Guardar</button>
+                            </div>
+
+                            <span class="bg-warning" th:if="${#fields.hasErrors('indice')}" th:errors="*{indice}"></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Listado</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <ul class="list-group" th:each="st : ${lsStatus}">
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><span th:text="${st.indice + '. -' +st.status}"></span>
+                                <a th:href="@{/admin/catStatus(ids=${st.id})}" class="btn btn-sm" th:classappend="${st.activo} ? ' btn-info' : ' '"><i class="fas fa-edit"></i></a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  data-th-replace="fragments/template-footer :: footer-template"></div>
+    </div>
+</body>
+</html>
